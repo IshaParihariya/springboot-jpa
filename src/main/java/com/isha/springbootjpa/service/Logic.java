@@ -7,6 +7,6 @@ public class Logic
 {
     public String logic()
     {
-        return "HELLO";
+        return "Hello";
     }
 }
