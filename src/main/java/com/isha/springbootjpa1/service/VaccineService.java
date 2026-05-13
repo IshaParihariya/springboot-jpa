@@ -5,6 +5,8 @@ import com.isha.springbootjpa1.repo.IVaccineRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class VaccineService implements IVaccineService
 {
@@ -40,4 +42,38 @@ public class VaccineService implements IVaccineService
     {
         return repo.existsById(id);
 }
+
+    @Override
+    public Optional<Vaccine> getVaccineById(Integer id)
+    {
+      return repo.findById(id);
+    }
+
+    @Override
+    public String deleteVaccineById(Integer id) {
+
+        // id present then delete else return some msg
+      Optional<Vaccine> optional=repo.findById(id);
+       if(optional.isPresent())
+       {
+           repo.deleteById(id);
+           return "Vaccine with id "+id+" is deleted";
+       }
+       return "Vaccine with id "+ id+" is not in the records";
+    }
+
+    @Override
+    public String deleteVaccineByObject(Vaccine obj)
+    {
+        // get the id first then using id delete
+        Integer i=obj.getId();
+        Optional<Vaccine> optional=repo.findById(i);
+        if(optional.isPresent())
+        {
+            repo.deleteById(i);
+            return "Vaccine with id "+i+" is deleted";
+        }
+        return "Vaccine with id "+ i+" is not in the records";
+    }
+
 }
