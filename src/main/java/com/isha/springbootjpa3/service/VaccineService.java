@@ -35,4 +35,21 @@ public class VaccineService implements IVaccineService
        Example<Vaccine> example=Example.of(vac);
        return repo.findAll(example);
     }
+
+    @Override
+    public String removeVaccineInfoByIds(Iterable<Integer> ids)
+    {
+        // finding all vaccines by ids
+       List<Vaccine> list= repo.findAllById(ids);
+
+       // now if list.size!=0 then delete else return string that unable to delete
+       if(list.size()!=0)
+       {
+           repo.deleteAllByIdInBatch(ids);
+
+           return "deleted all vaccines info";
+       }
+       else
+        return "unable to delete the vaccines info";
+    }
 }
